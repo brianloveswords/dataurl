@@ -14,6 +14,8 @@ Parse a dataurl string. Returns an object with three properties:
 * `charset` <String>
 * `data` <Buffer>
 
+If the input string isn't a valid dataURL, returns `false`.
+
 ## dataurl.format(options)<br>dataurl.convert(options)
 Convert some data to a dataurl string. Options expects three properties
 
