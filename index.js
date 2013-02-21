@@ -27,6 +27,7 @@ dataurl.convert = function (options) {
   dataUrlTemplate += options.data.toString('base64');
   return dataUrlTemplate;
 };
+dataurl.format = dataurl.convert;
 
 dataurl.parse = function (string) {
   var match;

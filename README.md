@@ -1,9 +1,26 @@
-# <project name>
-[![Build Status](https://secure.travis-ci.org/brianloveswords/<project>)](http://travis-ci.org/brianloveswords/<project>)
+# dataurl
+[![Build Status](https://secure.travis-ci.org/brianloveswords/dataurl)](http://travis-ci.org/brianloveswords/dataurl)
 
 # Install
+```bash
+$ npm install dataurl
+```
 
 # Usage
+
+## dataurl.parse(string)
+Parse a dataurl string. Returns an object with three properties:
+
+* `mimetype` <String> 
+* `charset` <String>
+* `data` <Buffer>
+
+## dataurl.format(options)<br>dataurl.convert(options)
+Convert some data to a dataurl string. Options expects three properties
+
+* `mimetype` <String> 
+* `charset` <String>
+* `data` <Buffer>
 
 # License
 

@@ -1,0 +1,28 @@
+{
+  "name": "dataurl",
+  "version": "0.0.1",
+  "description": "Tools for dealing with DataURLs",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tap": "~0.4.0"
+  },
+  "scripts": {
+    "test": "make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brianloveswords/dataurl.git"
+  },
+  "keywords": [
+    "datauri",
+    "dataurl"
+  ],
+  "author": "Brian J. Brennan",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "ab7ea8a693ffd4d02c041a1880b7f440307a0693"
+}
