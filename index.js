@@ -1,5 +1,5 @@
 const REGEX = {
-  dataurl: /data:(.*?)(?:;charset=(.*?))?(;base64),(.+)/i,
+  dataurl: /data:(.*?)(?:;charset=(.*?))?(;base64)?,(.+)/i,
   newlines: /(\r)|(\n)/g
 }
 const MIME_INDEX = 1;
@@ -17,6 +17,17 @@ function isString(thing) {
   return typeof thing === 'string';
 }
 
+dataurl.convert = function (options) {
+  var dataUrlTemplate = 'data:' + options.mimetype;
+  if (options.charset)
+    dataUrlTemplate += ';charset=' + options.charset;
+  if (options.encoded !== false)
+    dataUrlTemplate += ';base64'
+  dataUrlTemplate += ',';
+  dataUrlTemplate += options.data.toString('base64');
+  return dataUrlTemplate;
+};
+
 dataurl.parse = function (string) {
   var match;
   if (!isString(string))
@@ -27,9 +38,11 @@ dataurl.parse = function (string) {
   const encoded = !!match[ENCODED_INDEX];
   const base64 = (encoded ? 'base64' : null);
   const data = Buffer(match[DATA_INDEX], base64);
+  const charset = match[CHARSET_INDEX];
+  const mimetype = match[MIME_INDEX] || 'text/plain';
   return {
-    mime: match[MIME_INDEX],
-    charset: match[CHARSET_INDEX],
+    mimetype: mimetype,
+    charset: charset,
     data: data,
   }
 };
