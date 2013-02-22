@@ -1,4 +1,4 @@
-# dataurl [![Build Status](https://secure.travis-ci.org/brianloveswords/dataurl)](http://travis-ci.org/brianloveswords/dataurl)
+# dataurl [![Build Status](https://travis-ci.org/brianloveswords/dataurl.png?branch=master)](https://travis-ci.org/brianloveswords/dataurl)
 
 # Install
 ```bash
