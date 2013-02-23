@@ -8,20 +8,42 @@ $ npm install dataurl
 # Usage
 
 ## dataurl.parse(string)
-Parse a dataurl string. Returns an object with three properties:
+Parses a dataurl string. Returns an object with three properties:
 
-* `mimetype` <String> 
-* `charset` <String>
-* `data` <Buffer>
+* `data` <Buffer>: unencoded data
+* `mimetype` <String>: mimetype of the data, something like `'image/png'`
+* `charset` <String>:  charset of the data, if specified
 
 If the input string isn't a valid dataURL, returns `false`.
 
-## dataurl.format(options)<br>dataurl.convert(options)
-Convert some data to a dataurl string. Options expects three properties
+## dataurl.stream(options)
+Creates a Read/Write Stream for encoding data as a DataURL.
 
-* `mimetype` <String> 
-* `charset` <String>
-* `data` <Buffer>
+Options expects up to three properties:
+
+* `mimetype` <String>: Required
+* `charset` <String>: Optional
+* `encoded` <Boolean>: Optional
+
+Resulting stream will emit a data event for the header, then emit 'data'
+events for each chunk (base64 encoded, if necessary) as they pass
+through.
+
+Example:
+
+```js
+fs.createReadStream(pathToSomeImage).pipe(
+  dataurl.stream({ mimetype: 'image/png'})
+).pipe(process.stderr, {end: false});
+```
+
+## dataurl.format(options)<br>dataurl.convert(options)
+Converts some data to a dataurl string. Options expects up to four properties
+
+* `data` <Buffer>: Required
+* `mimetype` <String>: Required
+* `charset` <String>: Optional
+* `encoded` <Boolean>: Optional, whether to base64 encode the data. Defaults to `true`
 
 # License
 

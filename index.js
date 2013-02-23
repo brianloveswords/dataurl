@@ -45,6 +45,10 @@ function ConvertStream(options) {
   this.readable = true;
   this.writable = true;
   this._buffer = Buffer(0);
+  this.once('pipe', function (src) {
+    this.pause = src.pause.bind(src);
+    this.resume = src.resume.bind(src);
+  }.bind(this));
 }
 util.inherits(ConvertStream, Stream);
 ConvertStream.prototype._emit = Stream.prototype.emit;
@@ -93,12 +97,12 @@ ConvertStream.prototype.end = function end(data) {
   this.emit('end');
 };
 
+dataurl.stream = function (options) {
+  return new ConvertStream(options);
+};
 dataurl.convert = function (options) {
-  if (options.data) {
-    const header = makeHeader(options);
-    return makeDataUrlSync(header, options.data);
-  }
-  return ConvertStream(options);
+  const header = makeHeader(options);
+  return makeDataUrlSync(header, options.data);
 };
 dataurl.format = dataurl.convert;
 

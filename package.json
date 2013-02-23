@@ -1,6 +1,6 @@
 {
   "name": "dataurl",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Tools for dealing with DataURLs",
   "main": "index.js",
   "directories": {
@@ -19,7 +19,8 @@
   },
   "keywords": [
     "datauri",
-    "dataurl"
+    "dataurl",
+    "stream"
   ],
   "author": "Brian J. Brennan",
   "license": "MIT",
