@@ -1,6 +1,7 @@
 const test = require('tap').test;
 const dataurl = require('../');
 const fs = require('fs');
+const resevoir = require('./resevoir');
 
 const TEST_FILE = fs.readFileSync(__dirname + '/reddot.png');
 const TEST_DATAURL = 'data:image/png;base64,'+TEST_FILE.toString('base64');
@@ -36,7 +37,7 @@ test('dataurl.parse: plain, encoded, utf8', function (t) {
   t.end();
 });
 
-test('dataurl.convert', function (t) {
+test('dataurl.convert, sync', function (t) {
   const result = dataurl.convert({
     data: TEST_FILE,
     mimetype: 'image/png'
@@ -45,3 +46,34 @@ test('dataurl.convert', function (t) {
   t.same(result, expect, 'should be the right data url');
   t.end();
 });
+
+test('dataurl.convert, stream', function (t) {
+  const inputStream = fs.createReadStream(__dirname + '/reddot.png');
+  const ds = dataurl.convert({mimetype:'image/png'});
+  const bucket = resevoir();
+  ds.pipe(bucket);
+  inputStream.pipe(ds)
+  bucket.on('done', function (contents) {
+    t.same(contents.toString(), TEST_DATAURL, 'should have correct contents');
+    t.end();
+  });
+});
+
+test('dataurl.convert, slow stream', function (t) {
+  const ds = dataurl.convert({mimetype:'image/png'});
+  const length = TEST_FILE.length;
+  ds.pipe(resevoir()).on('done', function (contents) {
+    t.same(contents.toString(), TEST_DATAURL, 'should have correct contents');
+    t.end();
+  });
+  for (var i = 0; i < length; i++) {
+    //ds.pause();
+    ds.write(TEST_FILE.slice(i, i+1));
+    if (!(i % 4));
+      //ds.resume();
+  }
+  //ds.resume();
+  ds.end();
+});
+
+
