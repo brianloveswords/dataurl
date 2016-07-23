@@ -8,7 +8,7 @@ $ npm install dataurl
 # Usage
 
 ## dataurl.parse(string)
-Parses a dataurl string. Returns an object with three properties:
+Parses a `dataurl` string. Returns an object with three properties:
 
 * `data` <Buffer>: unencoded data
 * `mimetype` <String>: mimetype of the data, something like `'image/png'`
@@ -16,7 +16,18 @@ Parses a dataurl string. Returns an object with three properties:
 
 If the input string isn't a valid dataURL, returns `false`.
 
-## dataurl.stream(options)
+## dataurl.stringify({mimetype, charset, data})
+
+Converts some data to a `dataurl` string. Options expects up to four properties
+
+* `data` <Buffer>: Required
+* `mimetype` <String>: Required
+* `charset` <String>: Optional
+* `encoded` <Boolean>: Optional, whether to base64 encode the data. Defaults to `true`
+
+`dataurl.format` and `dataurl.convert` are aliases to `dataurl.stringify`
+
+## require('dataurl/stream)(options)
 Creates a Read/Write Stream for encoding data as a DataURL.
 
 Options expects up to three properties:
@@ -37,13 +48,6 @@ fs.createReadStream(pathToSomeImage).pipe(
 ).pipe(process.stderr, {end: false});
 ```
 
-## dataurl.format(options)<br>dataurl.convert(options)
-Converts some data to a dataurl string. Options expects up to four properties
-
-* `data` <Buffer>: Required
-* `mimetype` <String>: Required
-* `charset` <String>: Optional
-* `encoded` <Boolean>: Optional, whether to base64 encode the data. Defaults to `true`
 
 # License
 
@@ -71,3 +75,6 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
+
+
+
