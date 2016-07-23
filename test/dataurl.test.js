@@ -3,6 +3,8 @@ const dataurl = require('../');
 const fs = require('fs');
 const resevoir = require('./resevoir');
 
+dataurl.stream = require('../stream')
+
 const TEST_FILE = fs.readFileSync(__dirname + '/reddot.png');
 const TEST_DATAURL = 'data:image/png;base64,'+TEST_FILE.toString('base64');
 
